@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# Always list contents after a directory change
+function cd() {
+  builtin cd "$@" && ls -la;
+}
+
 # Create a new directory and enter it
 function mkd() {
 	mkdir -p "$@" && cd "$_";
