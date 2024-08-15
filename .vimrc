@@ -1,108 +1,87 @@
-" Use the Solarized Dark theme
-set background=dark
-colorscheme solarized
-let g:solarized_termtrans=1
+call plug#begin()
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.x' }
+Plug 'preservim/nerdtree'
+Plug 'sbdchd/neoformat'
+Plug 'github/copilot.vim'
+Plug 'vim-ruby/vim-ruby'
+Plug 'tpope/vim-rails'
+Plug 'dense-analysis/ale'
+Plug 'tpope/vim-fugitive'
+Plug 'prettier/vim-prettier'
+Plug 'tyru/open-browser.vim'
+Plug 'tyru/open-browser-github.vim'
+Plug 'whiteinge/diffconflicts'
+Plug 'projekt0n/github-nvim-theme'
+Plug 'folke/tokyonight.nvim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+call plug#end()
 
-" Make Vim more useful
-set nocompatible
-" Use the OS clipboard by default (on versions compiled with `+clipboard`)
-set clipboard=unnamed
-" Enhance command-line completion
-set wildmenu
-" Allow cursor keys in insert mode
-set esckeys
-" Allow backspace in insert mode
-set backspace=indent,eol,start
-" Optimize for fast terminal connections
-set ttyfast
-" Add the g flag to search/replace by default
-set gdefault
-" Use UTF-8 without BOM
-set encoding=utf-8 nobomb
-" Change mapleader
-let mapleader=","
-" Don’t add empty newlines at the end of files
-set binary
-set noeol
-" Centralize backups, swapfiles and undo history
-set backupdir=~/.vim/backups
-set directory=~/.vim/swaps
-if exists("&undodir")
-	set undodir=~/.vim/undo
-endif
-
-" Don’t create backups when editing files in certain directories
-set backupskip=/tmp/*,/private/tmp/*
-
-" Respect modeline in files
-set modeline
-set modelines=4
-" Enable per-directory .vimrc files and disable unsafe commands in them
-set exrc
-set secure
-" Enable line numbers
+set scrolloff=10
 set number
-" Enable syntax highlighting
-syntax on
-" Highlight current line
-set cursorline
-" Make tabs as wide as four spaces
-set tabstop=4
-set shiftwidth=4
+set relativenumber
+set tabstop=2 softtabstop=2
+set shiftwidth=2
 set expandtab
-" Show “invisible” characters
-set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_
-set list
-" Highlight searches
-set hlsearch
-" Ignore case of searches
-set ignorecase
-" Highlight dynamically as pattern is typed
-set incsearch
-" Always show status line
-set laststatus=2
-" Enable mouse in all modes
+set smartindent
+set nowrap
 set mouse=a
-" Disable error bells
-set noerrorbells
-" Don’t reset cursor to start of line when moving around.
-set nostartofline
-" Show the cursor position
-set ruler
-" Don’t show the intro message when starting Vim
-set shortmess=atI
-" Show the current mode
-set showmode
-" Show the filename in the window titlebar
-set title
-" Show the (partial) command as it’s being typed
-set showcmd
-" Use relative line numbers
-if exists("&relativenumber")
-	set relativenumber
-	au BufReadPost * set relativenumber
-endif
-" Start scrolling three lines before the horizontal window border
-set scrolloff=3
 
-" Strip trailing whitespace (,ss)
-function! StripWhitespace()
-	let save_cursor = getpos(".")
-	let old_query = getreg('/')
-	:%s/\s\+$//e
-	call setpos('.', save_cursor)
-	call setreg('/', old_query)
-endfunction
-noremap <leader>ss :call StripWhitespace()<CR>
-" Save a file as root (,W)
-noremap <leader>W :w !sudo tee % > /dev/null<CR>
+colorscheme tokyonight-night
+syntax on
+filetype on
+filetype plugin indent on
 
-" Automatic commands
-if has("autocmd")
-	" Enable file type detection
-	filetype on
-	" Treat .json files as .js
-	autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
-	" Treat .md files as Markdown
-	autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
-endif
+let mapleader = " "
+nnoremap <leader>pv :Vex<CR>
+nnoremap <Leader><CR> :so ~/.config/nvim/init.vim<CR>
+
+nnoremap <leader>ff <cmd>Telescope find_files<CR>
+nnoremap <leader>fg <cmd>Telescope live_grep<CR>
+nnoremap <leader>fb <cmd>Telescope buffers<CR>
+nnoremap <leader>fh <cmd>Telescope help_tags<CR>
+
+nnoremap <leader>q <cmd>:q<CR>
+nnoremap <leader>l <C-w>l
+nnoremap <leader>h <C-w>h
+nnoremap <leader>k <C-w>k
+nnoremap <leader>j <C-w>j
+
+nnoremap <leader>v <C-w>v
+nnoremap <leader>s <C-w>s
+
+nnoremap <C-j> :cnext<CR>
+nnoremap <C-k> :cprev<CR>
+
+nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <C-n> :NERDTree<CR>
+nnoremap <C-t> :NERDTreeToggle<CR>
+nnoremap <C-f> :NERDTreeFind<CR>
+
+nnoremap <leader>8 :noh<CR>
+
+nnoremap <leader>ogf :OpenGithubFile<CR>
+
+let g:NERDTreeWinPos = "right"
+let NERDTreeShowLineNumbers=1
+let NERDTreeShowHidden=1
+
+let g:prettier#autoformat = 1
+let g:prettier#autoformat_require_pragma = 0
+let g:prettier#autoformat_config_present = 1
+
+" relative line numbers
+autocmd FileType nerdtree setlocal relativenumber
+
+" if another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
+autocmd BufEnter * if winnr() == winnr('h') && bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
+      \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
+
+" start NERDTree and put the cursor back in the other window.
+autocmd VimEnter * NERDTree | wincmd p
+
+" vim-ruby | vim-rails
+autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
+autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
+
