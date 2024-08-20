@@ -3,7 +3,7 @@ alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
 alias s="cd ~/Sites"
 alias g="git"
-alias gpush="git push origin $(git branch --show)"
+alias gcb="git branch --show"
 alias vim="nvim"
 alias vi="nvim"
 
