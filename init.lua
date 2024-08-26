@@ -76,6 +76,10 @@ require('lazy').setup({
   { 'VonHeikemen/lsp-zero.nvim', branch = 'v3.x' },
   {
     'neovim/nvim-lspconfig',
+    dependencies = {
+      { 'williamboman/mason.nvim', config = true },
+      'williamboman/mason-lspconfig.nvim',
+    },
     config = function()
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
@@ -101,8 +105,6 @@ require('lazy').setup({
       })
     end,
   },
-  { 'williamboman/mason.nvim' },
-  { 'williamboman/mason-lspconfig.nvim' },
   { 'hrsh7th/cmp-nvim-lsp' },
   {
     'hrsh7th/nvim-cmp',
@@ -532,6 +534,7 @@ require("nvim-tree").setup({
     side = 'right',
     number = true,
     relativenumber = true,
+    adaptive_size = true,
   },
   renderer = {
     icons = {
@@ -574,22 +577,43 @@ lsp_zero.on_attach(function(_, bufnr)
   lsp_zero.default_keymaps({ buffer = bufnr })
 end)
 
-require('mason').setup({})
-require('mason-lspconfig').setup({
-  ensure_installed = {
-    'lua_ls',
-    'bashls',
-    'cssls',
-    'html',
-    'jsonls',
-    'vtsls'
+-- LSP configuration
+
+local servers = {
+  ruby_lsp = {},
+  sorbet = {},
+  lua_ls = {
+     Lua = {
+      workspace = { checkThirdParty = false },
+      telemetry = { enable = false },
+      diagnostics = { globals = { "vim" } },
+    },
   },
-  handlers = {
-    function(server_name)
-      require('lspconfig')[server_name].setup({})
-    end,
-  },
-})
+  bashls = {},
+  cssls = {},
+  html = {},
+  jsonls = {},
+  vtsls = {},
+}
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+
+local mason_lspconfig = require("mason-lspconfig")
+
+mason_lspconfig.setup {
+  ensure_installed = vim.tbl_keys(servers),
+}
+
+mason_lspconfig.setup_handlers {
+  function(server_name)
+    require("lspconfig")[server_name].setup {
+      capabilities = capabilities,
+      settings = servers[server_name],
+      filetypes = (servers[server_name] or {}).filetypes,
+    }
+  end
+}
 
 local cmp = require('cmp')
 -- local cmp_action = lsp_zero.cmp_action()
@@ -614,6 +638,11 @@ cmp.setup({
     expand = function(args)
       require('luasnip').lsp_expand(args.body)
     end,
+  },
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'copilot' },
+    { name = 'luasnip' },
   },
 })
 
