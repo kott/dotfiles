@@ -7,14 +7,6 @@ function _setup_neovim_build() {
   make CMAKE_BUILD_TYPE=RelWithDebInfo
 }
 
-function _link_nvim_config() {
-  mkdir -p $HOME/.config/nvim
-  ln -sf "$SCRIPT_DIR/.luarc.json" "$HOME/.config/nvim/luarc.json"
-  ln -sf "$SCRIPT_DIR/init.lua" "$HOME/.config/nvim/init.lua"
-
-  echo "👌 finito, linked nvim config"
-}
-
 function _install_deps_macos() {
   brew install coreutils
   brew intall ninja cmake gettest curl
@@ -38,7 +30,6 @@ function init_nvim_macos() {
   _install_deps_macos
   _setup_neovim_build
   sudo make install
-  _link_nvim_config 
   
   echo "👌 finito, installed nVim for macos"
 }
@@ -47,9 +38,38 @@ function init_nvim_linux() {
   _install_deps_linux
   _setup_neovim_build
   cd build && cpack -G DEB && sudo dpkg -i --force-overwrite nvim-linux64.deb 
-  _link_nvim_config
   
   echo "👌 finito, installed nVim for linux"
 }
 
+function link_nvim_config() {
+  mkdir -p $HOME/.config/nvim
+  mkdir -p $HOME/.config/nvim/lua
+  mkdir -p $HOME/.config/nvim/lua/config
+  mkdir -p $HOME/.config/nvim/lua/plugins
+  mkdir -p $HOME/.config/nvim/lua/plugins/lsp
+
+  ln -sf "$SCRIPT_DIR/.luarc.json" "$HOME/.config/nvim/luarc.json"
+  ln -sf "$SCRIPT_DIR/init.lua" "$HOME/.config/nvim/init.lua"
+  create_symlinks "$SCRIPT_DIR/lua/" "$HOME/.config/nvim/lua/"
+  create_symlinks "$SCRIPT_DIR/lua/config" "$HOME/.config/nvim/lua/config"
+  create_symlinks "$SCRIPT_DIR/lua/plugins" "$HOME/.config/nvim/lua/plugins"
+  create_symlinks "$SCRIPT_DIR/lua/plugins/lsp" "$HOME/.config/nvim/lua/plugins/lsp"
+
+  echo "👌 finito, linked nvim config"
+}
+
+create_symlinks() {
+  local src=$1
+  local dest=$2
+
+  mkdir -p "$dest"
+
+  for item in "$src"/*; do
+    local base_item=$(basename "$item")
+    local target_item="$dest/$base_item"
+
+    ln -sf "$item" "$target_item"
+  done
+}
 

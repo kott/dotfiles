@@ -48,6 +48,7 @@ case "$OSTYPE" in
     ;;
 esac
 
+link_nvim_config
 ln -sf "$SCRIPT_DIR/.aliases" $HOME/.aliases
 ln -sf "$SCRIPT_DIR/.functions" $HOME/.functions
 ln -sf "$SCRIPT_DIR/.zshrc" $HOME/.zshrc
