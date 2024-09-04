@@ -31,6 +31,9 @@
           relativenumber = true,
           adaptive_size = true,
         },
+        git = {
+          ignore = false,
+        },
         renderer = {
           icons = {
             show = {
