@@ -1,4 +1,3 @@
-
 vim.g.mapleader = " "
 
 vim.api.nvim_set_keymap("n", "<leader>pv", ":Vex<CR>", { noremap = true })
@@ -23,3 +22,5 @@ vim.api.nvim_set_keymap("n", "<leader>8", ":noh<CR>", { noremap = true })
 
 vim.api.nvim_set_keymap("n", "<leader>ogf", ":OpenGithubFile<CR>", { noremap = true })
 
+vim.keymap.set('n', "<leader>cp", function() vim.fn.setreg('+', vim.fn.expand('%:p')) end) -- Copy absolute path to clipboard
+vim.keymap.set('n', "<leader>c", function() vim.fn.setreg('+', vim.fn.expand('%')) end) -- Copy relative path to clipboard
