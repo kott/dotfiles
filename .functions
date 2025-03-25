@@ -42,7 +42,7 @@ start_nvim_for_claude() {
     nvim --listen "$SOCKET"
 }
 
-claude() {
+start_claude() {
     local socket_path="/tmp/nvim-$(basename "$PWD")"
     dev claude -- "my vim/neovim is listening at the socket $socket_path"
 }
