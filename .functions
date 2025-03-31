@@ -47,3 +47,8 @@ start_claude() {
     dev claude -- "my vim/neovim is listening at the socket $socket_path"
 }
 
+chpwd() {
+  # Update Ghostty's directory tracking
+  printf "\033]7;file://%s%s\033\\" "$(hostname)" "$(pwd)"
+}
+
