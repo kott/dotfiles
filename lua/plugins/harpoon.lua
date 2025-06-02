@@ -29,6 +29,7 @@ return {
 
       vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end, { desc = "Harpoon Mark" })
       vim.keymap.set("n", "<leader>r", function() harpoon:list():remove() end, { desc = "Harpoon Unmark" })
+      vim.keymap.set("n", "<leader>hc", function() harpoon:list():clear() end, { desc = "Harpoon Clear" })
 
       vim.keymap.set("n", "<M-1>", function() harpoon:list():select(1) end)
       vim.keymap.set("n", "<M-2>", function() harpoon:list():select(2) end)
