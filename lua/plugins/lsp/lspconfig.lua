@@ -110,12 +110,5 @@ return {
       end,
     })
   end,
-  -- Ruby LSP setup: https://shopify.github.io/ruby-lsp/EDITORS_md.html#label-LazyVim+LSP
-  --servers = {
-    --ruby_lsp = {
-      --mason = false,
-      --cmd = { vim.fn.expand "~/.asdf/shims/ruby-lsp" },
-    --},
-  --},
 }
 

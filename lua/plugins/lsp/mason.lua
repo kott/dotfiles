@@ -28,8 +28,8 @@ return {
         "lua_ls",
         "prismals",
         "pyright",
-        --"ruby_lsp",
-        "solargraph", -- using this in favor of ruby_lsp
+        --"ruby_lsp", -- don't install via mason, use gem install ruby-lsp instead
+        --"solargraph", -- replaced with ruby_lsp for better performance
         "sorbet",
         "sqls",
         "tsserver",
