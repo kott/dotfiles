@@ -29,7 +29,7 @@ return {
         "prismals",
         "pyright",
         --"ruby_lsp", -- don't install via mason, use gem install ruby-lsp instead
-        --"solargraph", -- replaced with ruby_lsp for better performance
+        --"solargraph", -- alternate incase ruby_lsp gives issues
         "sorbet",
         "sqls",
         "tsserver",
