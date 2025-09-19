@@ -3,6 +3,7 @@
   path = ~/.gitconfig.local
   path = ~/dotfiles/personal/.gitconfig
   path = ~/shopify-dotfiles/personal/.gitconfig
+	path = /Users/kristianott/.config/dev/gitconfig
 
 [alias]
   # Amend the currently staged files to the latest commit
@@ -92,3 +93,8 @@
 	enabled = true
   autoupdate = true
 
+[user]
+	email = ott.kristian@gmail.com
+	name = Kristian Ott
+[maintenance]
+	repo = /Users/kristianott/world/trees/root/src

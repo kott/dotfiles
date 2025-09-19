@@ -65,6 +65,17 @@ create_symlinks() {
 
   mkdir -p "$dest"
 
+  # Remove orphaned symlinks first
+  if [ -d "$dest" ]; then
+    find "$dest" -maxdepth 1 -type l | while read -r link; do
+      if [ ! -e "$link" ]; then
+        echo "Removing orphaned symlink: $link"
+        rm "$link"
+      fi
+    done
+  fi
+
+  # Create new symlinks
   for item in "$src"/*; do
     local base_item=$(basename "$item")
     local target_item="$dest/$base_item"

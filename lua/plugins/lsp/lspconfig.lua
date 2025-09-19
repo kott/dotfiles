@@ -69,11 +69,11 @@ return {
           capabilities = capabilities,
         })
       end,
-      ["tsserver"] = function()
+      ["ts_ls"] = function()
         -- configure svelte server
-        lspconfig["tsserver"].setup({
+        lspconfig["ts_ls"].setup({
           capabilities = capabilities,
-          on_attach = function(client, bufnr)
+          on_attach = function(client, _)
             vim.api.nvim_create_autocmd("BufWritePost", {
               pattern = { "*.js", "*.ts" },
               callback = function(ctx)

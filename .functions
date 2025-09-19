@@ -44,11 +44,6 @@ start_nvim_for_claude() {
 
 start_claude() {
     local socket_path="/tmp/nvim-$(basename "$PWD")"
-    dev claude -- "my vim/neovim is listening at the socket $socket_path"
-}
-
-chpwd() {
-  # Update Ghostty's directory tracking
-  printf "\033]7;file://%s%s\033\\" "$(hostname)" "$(pwd)"
+    devx claude -- "my vim/neovim is listening at the socket $socket_path"
 }
 

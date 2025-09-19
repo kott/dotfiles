@@ -32,7 +32,7 @@ return {
         --"solargraph", -- alternate incase ruby_lsp gives issues
         "sorbet",
         "sqls",
-        "tsserver",
+        "ts_ls",
         "yamlls",
       }
     })
