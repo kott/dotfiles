@@ -28,9 +28,9 @@ return {
         "lua_ls",
         "prismals",
         "pyright",
-        --"ruby_lsp", -- don't install via mason, use gem install ruby-lsp instead
+        --"ruby_lsp", -- managed via shadowenv/asdf in lspconfig.lua
         --"solargraph", -- alternate incase ruby_lsp gives issues
-        "sorbet",
+        --"sorbet", -- managed via shadowenv in lspconfig.lua
         "sqls",
         "ts_ls",
         "yamlls",

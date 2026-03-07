@@ -40,4 +40,5 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 
 eval $(thefuck --alias)
 
-
+# Added by tec agent
+[[ -x /Users/kristianott/.local/state/tec/profiles/base/current/global/init ]] && eval "$(/Users/kristianott/.local/state/tec/profiles/base/current/global/init zsh)"

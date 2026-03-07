@@ -61,6 +61,33 @@ return {
     -- used to enable autocompletion (assign to every lsp server config)
     local capabilities = cmp_nvim_lsp.default_capabilities()
 
+    -- Ruby servers: use shadowenv in World zones so the correct nix Ruby is used.
+    -- Each World zone has its own Gemfile/shadowenv, so root_dir finds the nearest
+    -- Gemfile to spawn a separate server instance per zone.
+    local cwd = vim.fn.getcwd()
+    local in_world = cwd:match("/world/trees/")
+
+    -- Find the nearest Gemfile to use as root. This ensures each zone gets its own
+    -- LSP server instance with the correct dependencies.
+    local function zone_root(fname)
+      return vim.fs.root(fname, { "Gemfile" })
+    end
+
+    lspconfig["ruby_lsp"].setup({
+      capabilities = capabilities,
+      cmd = in_world
+        and { "shadowenv", "exec", "--", "ruby-lsp" }
+        or { vim.fn.expand("~/.asdf/shims/ruby-lsp") },
+      root_dir = zone_root,
+    })
+
+    if in_world then
+      lspconfig["sorbet"].setup({
+        capabilities = capabilities,
+        cmd = { "shadowenv", "exec", "--", "srb", "typecheck", "--lsp" },
+        root_dir = zone_root,
+      })
+    end
 
     mason_lspconfig.setup_handlers({
       -- default handler for installed servers
