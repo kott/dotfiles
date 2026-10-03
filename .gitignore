@@ -1,4 +1,7 @@
 neovim/
 lazygit
 lazygit.tar.gz
+.DS_Store
+.ruby-lsp/
+__pycache__/
 

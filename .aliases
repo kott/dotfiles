@@ -6,8 +6,6 @@ alias g="git"
 alias gcb="git branch --show"
 alias vim="nvim"
 alias vi="nvim"
-alias vai='start_nvim_for_claude'
-alias claude='start_claude'
 
 # Enable aliases to be sudo’ed
 alias sudo='sudo '

@@ -1,44 +1,30 @@
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH="$HOME/bin:/usr/local/bin:$PATH"
 export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="avit"
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
+[[ -r "$ZSH/oh-my-zsh.sh" ]] && source "$ZSH/oh-my-zsh.sh"
 
-plugins=(
-  git
-  zsh-autosuggestions
-  zsh-syntax-highlighting
-)
+for file in "$HOME/.aliases" "$HOME/.functions"; do
+  [[ -f "$file" && -r "$file" ]] && source "$file"
+done
+unset file
 
-source $ZSH/oh-my-zsh.sh
+[[ -x /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
 
-for file in ~/.{aliases,functions}; do
-	[ -r "$file" ] && [ -f "$file" ] && source "$file";
-done;
-unset file;
-
-[[ -f /opt/dev/sh/chruby/chruby.sh ]] && { type chruby >/dev/null 2>&1 || chruby () { source /opt/dev/sh/chruby/chruby.sh; chruby "$@"; } }
-
-[[ -x /opt/homebrew/bin/brew ]] && eval $(/opt/homebrew/bin/brew shellenv)
-
-[ -f /opt/dev/dev.sh ] && source /opt/dev/dev.sh
-
-# ruby stuff
-if [ -d "/opt/homebrew/opt/ruby/bin" ]; then
-  export PATH=/opt/homebrew/opt/ruby/bin:$PATH
-  export PATH=`gem environment gemdir`/bin:$PATH
+if [[ -d /opt/homebrew/opt/ruby/bin ]]; then
+  export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+  command -v gem >/dev/null 2>&1 && export PATH="$(gem environment gemdir)/bin:$PATH"
 fi
-
 export PATH="$PATH:$HOME/.rvm/bin"
-alias python=/opt/homebrew/bin/python3.11
+command -v python3 >/dev/null 2>&1 && alias python=python3
 
-# cloudplatform: add Shopify clusters to your local kubernetes config
-export KUBECONFIG=${KUBECONFIG:+$KUBECONFIG:}~/.kube/config:~/.kube/config.shopify.cloudplatform
-for file in ~/src/github.com/Shopify/cloudplatform/workflow-utils/*.bash; do source ${file}; done
-kubectl-short-aliases
+command -v thefuck >/dev/null 2>&1 && eval "$(thefuck --alias)"
 
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+export PNPM_HOME="${PNPM_HOME:-$HOME/Library/pnpm}"
+export PATH="$PNPM_HOME:$PATH"
 
-eval $(thefuck --alias)
+work_zshrc="${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/work/zshrc"
+[[ -f "$work_zshrc" && -r "$work_zshrc" ]] && source "$work_zshrc"
+unset work_zshrc
 
-# Added by tec agent
-[[ -x /Users/kristianott/.local/state/tec/profiles/base/current/global/init ]] && eval "$(/Users/kristianott/.local/state/tec/profiles/base/current/global/init zsh)"

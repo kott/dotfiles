@@ -1,0 +1,3 @@
+working-directory=inherit
+shell-integration=zsh
+window-inherit-working-directory=true

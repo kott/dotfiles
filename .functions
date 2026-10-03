@@ -36,14 +36,3 @@ if [ $? -eq 0 ]; then
 	}
 fi;
 
-start_nvim_for_claude() {
-    CURRENT_DIR=$(basename "$PWD")
-    SOCKET="/tmp/nvim-${CURRENT_DIR}"
-    nvim --listen "$SOCKET"
-}
-
-start_claude() {
-    local socket_path="/tmp/nvim-$(basename "$PWD")"
-    devx claude -- "my vim/neovim is listening at the socket $socket_path"
-}
-

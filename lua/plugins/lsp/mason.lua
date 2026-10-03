@@ -28,9 +28,6 @@ return {
         "lua_ls",
         "prismals",
         "pyright",
-        --"ruby_lsp", -- managed via shadowenv/asdf in lspconfig.lua
-        --"solargraph", -- alternate incase ruby_lsp gives issues
-        --"sorbet", -- managed via shadowenv in lspconfig.lua
         "sqls",
         "ts_ls",
         "yamlls",
