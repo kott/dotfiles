@@ -9,22 +9,6 @@ CONFIG_DIR=${XDG_CONFIG_HOME:-$HOME/.config}
 CONFIG_DIR=${CONFIG_DIR%/}
 WORK_CONFIG="$CONFIG_DIR/dotfiles/work"
 
-compose_agents_md
-compose_gitconfig
-
-link_vim_config
-link_config "$SCRIPT_DIR/.aliases" "$HOME/.aliases"
-link_config "$SCRIPT_DIR/.functions" "$HOME/.functions"
-link_config "$SCRIPT_DIR/ghostty/config" "$CONFIG_DIR/ghostty/config"
-link_config "$SCRIPT_DIR/pi/llm-wiki/wiki.yaml" "$HOME/.llm-wiki/wiki.yaml"
-link_pi_resources agents
-link_pi_resources prompts
-link_pi_resources skills
-link_pi_resources extensions
-link_zshrc
-
-printf '🎉 Done.\n'
-
 function fail() {
   printf '🚨 error: %s\n' "$*" >&2
   exit 1
@@ -136,3 +120,18 @@ function compose_agents_md() {
   echo "✅ composed ~/.pi/agent/AGENTS.md"
 }
 
+compose_agents_md
+compose_gitconfig
+
+link_vim_config
+link_config "$SCRIPT_DIR/.aliases" "$HOME/.aliases"
+link_config "$SCRIPT_DIR/.functions" "$HOME/.functions"
+link_config "$SCRIPT_DIR/ghostty/config" "$CONFIG_DIR/ghostty/config"
+link_config "$SCRIPT_DIR/pi/llm-wiki/wiki.yaml" "$HOME/.llm-wiki/wiki.yaml"
+link_pi_resources agents
+link_pi_resources prompts
+link_pi_resources skills
+link_pi_resources extensions
+link_zshrc
+
+printf '🎉 Done.\n'
