@@ -17,7 +17,6 @@
   autocrlf = input
   safecrlf = true
   ignorecase = false
-  excludesfile = ~/.gitignore_global
   trustctime = false
   precomposeunicode = false
   editor = vim
