@@ -127,6 +127,7 @@ link_vim_config
 link_config "$SCRIPT_DIR/.aliases" "$HOME/.aliases"
 link_config "$SCRIPT_DIR/.functions" "$HOME/.functions"
 link_config "$SCRIPT_DIR/ghostty/config" "$CONFIG_DIR/ghostty/config"
+link_config "$SCRIPT_DIR/herdr/config.toml" "$CONFIG_DIR/herdr/config.toml"
 link_config "$SCRIPT_DIR/pi/llm-wiki/wiki.yaml" "$HOME/.llm-wiki/wiki.yaml"
 link_pi_resources agents
 link_pi_resources prompts

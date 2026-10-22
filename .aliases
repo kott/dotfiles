@@ -1,6 +1,6 @@
 # Shortcuts
 alias dl="cd ~/Downloads"
-alias dt="cd ~/Desktop"
+alias dtop="cd ~/Desktop"
 alias s="cd ~/Sites"
 alias g="git"
 alias gcb="git branch --show"
